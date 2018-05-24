@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <title>atfcAPI</title>
+  <script src="config.js"></script>
+  <script src="//github.elemecdn.com/eleme/ubt-web/1.3.0/ubt.min.js"></script>
+</head>
+<body>
+  <div id="content"></div>
+  <% if (htmlWebpackPlugin.options.serviceWorker) { %>
+    <script type="text/javascript">
+    (function(serviceWorkerFilename) {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register(serviceWorkerFilename)
+          .then(function() {
+            console.log('Service worker registered!');
+          })
+          .catch(function(error) {
+            console.error('Error registering service worker: ', error);
+          });
+      } else {
+        console.error('Not supported by browser');
+      }
+    })('<%= htmlWebpackPlugin.options.serviceWorker%>');
+    </script>
+  <% } %>
+</body>
+</html>

@@ -1,0 +1,71 @@
+#dbConfig {
+  padding: 0 50px 50px 50px;
+  height: 100%;
+  overflow-y: auto;
+
+  .configForm {
+    max-width: 800px;
+    .form-group {
+      margin: 0 0 12px!important;
+    }
+    .row {
+      margin-left: 30%;
+      .form-group {
+        display: inline-block;
+      }
+    }
+  }
+
+  .configList {
+   .form-group {
+     float: left;
+     width: 22%;
+     margin-left: 0;
+     .col-xs-3 {
+       width: 34%;
+       padding-left: 0;
+     }
+     .col-xs-9 {
+       width: 66%;
+       padding-left: 0;
+     }
+   }
+
+   .btn {
+     margin-left: 20px;
+   }
+
+   thead {
+     th {
+       text-align: center;
+     }
+     a {
+       color: #444;
+     }
+     a:hover {
+       text-decoration: none;
+     }
+     a.on .glyphicon {
+       color: $blue;
+     }
+     .glyphicon {
+       font-size: 10px;
+       margin-left: 3px;
+       color: #999;
+     }
+   }
+
+   td {
+     a {
+      color: $blue;
+      margin: 0 10px;
+    }
+   }
+   td:nth-child(4) {
+     max-width: 300px;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     overflow: hidden;
+   }
+  }
+}

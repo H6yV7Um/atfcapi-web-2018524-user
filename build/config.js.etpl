@@ -1,0 +1,4 @@
+var ATFCAPI = {
+  HOME: '{{_ .ATFCAPI_HOME}}',
+  ENV: '{{_ .ATFCAPI_ENV}}'
+};

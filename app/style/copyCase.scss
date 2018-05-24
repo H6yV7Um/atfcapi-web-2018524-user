@@ -1,0 +1,52 @@
+#CopyCaseList {
+  padding: 0 50px;
+  width: 95%;
+  overflow-y: auto;
+  height: 100%;
+
+  .form-horizontal {
+    max-width: 800px;
+  }
+  .form-group {
+    margin: 0 0 12px!important;
+  }
+
+  .copy-case-filter {
+    max-width: 1300px;
+
+    .form-group {
+      float: left;
+      width: 31%;
+      .control-label {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
+  .nodata {
+    text-align: center;
+  }
+
+  .search-btn {
+    float:right;
+  }
+
+  .right-margin {
+    margin: 0 15px 0 15px;
+  }
+
+  .mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba( 0, 0, 0, .4);
+    display: none;
+  }
+
+  th {
+    text-align: center;
+  }
+}

@@ -1,0 +1,67 @@
+#header {
+  padding: 0 50px;
+  height: 100%;
+  overflow-y: auto;
+
+  .api-filter {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .api-filter .col-xs-6 {
+    padding-left: 0;
+  }
+
+  .api-filter .form-group {
+    width: 32%;
+  }
+
+  .table {
+    width: 100%;
+
+    th, td {
+      text-align: center;
+    }
+
+    td {
+      a {
+        margin: 0 8px;
+      }
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.header-form {
+
+  .table-form {
+    th, td {
+      text-align: center;
+    }
+
+    td {
+      padding: 0;
+      height: 30px;
+      line-height: 30px;
+
+      a {
+        margin: 0 10px;
+      }
+
+      &:first-child {
+        width: 30px;
+      }
+      &:nth-child(2) {
+        text-align: left;
+      }
+    }
+
+    .form-group {
+      margin: 0;
+    }
+  }
+}

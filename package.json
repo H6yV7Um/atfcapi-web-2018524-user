@@ -1,0 +1,98 @@
+{
+  "name": "atfcapi-web",
+  "version": "1.8.4",
+  "description": "atfcapi test tool",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/houkangbo/gcmdbUI.20180524-project.git"
+  },
+  "scripts": {
+    "prod": "rm -fr dist && mkdir -p dist/pages/protocolTemplate && cp app/pages/protocolTemplate/* dist/pages/protocolTemplate/ && cp build/* dist/ && webpack --progress --profile --colors",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint-staged": "lint-staged",
+    "lint": "eslint ./ --ext .jsx,.js --quiet --ignore-pattern .gitignore --ignore-pattern .eslintignore",
+    "start": "cd dev && node server.js"
+  },
+  "author": "Robin Deng",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-babili": "0.0.12",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-react": "^6.24.1",
+    "babili-webpack-plugin": "0.0.11",
+    "core-js": "^2.4.1",
+    "css-loader": "^0.23.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.10.3",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "fetch-x": "^0.3.4",
+    "file-loader": "^0.8.4",
+    "html-loader": "^0.3.0",
+    "html-webpack-plugin": "^2.28.0",
+    "lint-staged": "^3.3.0",
+    "node-sass": "^4.1.0",
+    "pre-commit": "^1.2.2",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.13.1",
+    "sw-precache": "^5.1.0",
+    "sw-precache-webpack-plugin": "^0.9.1",
+    "url-loader": "^0.5.6",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "fetch-x": "^0.3.8",
+    "isomorphic-fetch": "^2.2.1",
+    "js-cookie": "^2.1.3",
+    "json-editor": "^0.7.28",
+    "moment": "^2.18.1",
+    "react": "^15.5.4",
+    "react-addons-shallow-compare": "^15.5.2",
+    "react-bootstrap": "^0.28.5",
+    "react-click-outside": "^2.2.0",
+    "react-codemirror": "^0.3.0",
+    "react-dates": "^7.0.1",
+    "react-dom": "^15.4.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.7.0",
+    "react-router-redux": "^4.0.5",
+    "react-ui-tree": "^3.1.0",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0",
+    "sortablejs": "^1.5.0-rc1",
+    "vkbeautify": "^0.99.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": "eslint"
+  },
+  "pre-commit": "lint-staged",
+  "keywords": [
+    "react",
+    "atfc",
+    "framework"
+  ],
+  "faas": {
+    "domain": "atfcapi",
+    "public": "dist",
+    "description": "测试框架",
+    "author_name": "崔宁",
+    "author_email": "ning.cui@ele.me",
+    "notice": [
+      "ning.cui@ele.me"
+    ],
+    "build": [
+      "npm",
+      "npm run prod"
+    ]
+  }
+}

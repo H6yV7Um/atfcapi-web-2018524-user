@@ -1,0 +1,7 @@
+app/vendor/*
+app/pages/example/*
+app/store/*
+app/reducers/*
+dev
+dist
+webpack.config.js

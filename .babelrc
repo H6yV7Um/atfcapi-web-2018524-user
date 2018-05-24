@@ -1,0 +1,27 @@
+{
+  "presets": [["env", {
+    "target": {
+      "chrome": 50
+    },
+    "modules": false,
+    "useBuiltIns": true,
+    "debug": true,
+    "exclude": [
+      "transform-es2015-classes",
+      "check-es2015-constants",
+      "transform-es2015-arrow-functions",
+      "transform-es2015-block-scoping",
+      "transform-es2015-computed-properties",
+      "transform-es2015-for-of",
+      "transform-es2015-object-super",
+      "transform-es2015-template-literals",
+      "transform-regenerator"
+    ]
+  }],
+  "react",
+  "babili"
+  ],
+  "plugins": [
+    "transform-object-rest-spread"
+  ]
+}

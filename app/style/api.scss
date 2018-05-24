@@ -1,0 +1,174 @@
+#newApi {
+  padding: 0 50px;
+  height: 100%;
+  overflow-y: auto;
+
+  .form-horizontal {
+    max-width: 800px;
+  }
+  .baseinfo {
+    display: flex;
+  }
+  .form-group {
+    margin: 0 0 12px!important;
+  }
+
+  .api-filter {
+   max-width: 830px;
+
+    .form-group {
+      float: none;
+      width: 100%;
+    }
+
+    .col-xs-4 {
+      width: 25%;
+    }
+
+    .col-xs-8 {
+      width: 50%;
+    }
+  }
+
+
+  .panel-body, .panel-body th, .panel-body td {
+    text-align: center;
+    position: relative;
+    td a {
+      margin: 0 15px;
+    }
+  }
+
+  textarea.form-control {
+	  height: 100px;
+  }
+
+  .api-form {
+    display: flex;
+    flex-direction: column;
+    input {
+      box-sizing: border-box;
+    }
+  }
+
+  .left {
+    flex: 1.5;
+  }
+
+  .schema {
+    flex: 1;
+    text-align: left;
+  }
+
+  .schemaTitle {
+    margin-top: 0;
+  }
+}
+
+button.api-operate {
+  width: 100px;
+  float: right;
+  margin-left: 20px;
+}
+
+#apiList {
+  padding: 0 50px;
+  height: 100%;
+  overflow-y: auto;
+
+  .mt15 {
+    margin-top: 15px;
+  }
+
+  th {
+    text-align: center;
+  }
+
+  td {
+    max-width: 200px;
+    word-wrap: break-word;
+    word-break: normal;
+
+    &.label-td {
+      text-align: center;
+      width: 80px;
+      span {
+        white-space: pre-line;
+      }
+    }
+
+    a {
+      margin: 0 7px;
+    }
+
+    code {
+      max-width: 300px;
+      display: inline-block;
+      font-size: 10px;
+    }
+  }
+
+  .code-td {
+    padding: 0;
+    code {
+      max-height: 40px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+  }
+
+  td:last-child {
+    width: 100px;
+    text-align: center;
+  }
+}
+
+.response-modal {
+
+  .ace-wrap {
+    margin-bottom: 10px;
+    display: flex;
+    margin-right: 0;
+    .tit {
+      font-weight: bold;
+      text-align: right;
+    }
+    .code-editor {
+      display: inline-block;
+      margin: 0 15px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      flex: 1
+    }
+  }
+
+  .body-tabs {
+    margin-bottom: 10px;
+    position: relative;
+
+    .tab-content {
+      border: solid #ddd;
+      border-width: 0 1px 1px;
+      padding: 20px 0 0;
+    }
+
+    .add-body {
+      position: absolute;
+      top: 15px;
+      right: 10px;
+    }
+
+    .del-body {
+      position: absolute;
+      left: 18px;
+      bottom: 50px;
+    }
+  }
+
+}
+
+.response-pop {
+  max-width: 500px;
+  word-wrap: break-word;
+  word-break: normal;
+}

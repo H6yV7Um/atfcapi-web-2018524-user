@@ -1,0 +1,75 @@
+.upload-form {
+  padding: 15px;
+  width: 85%;
+
+  .api-filter {
+    overflow: hidden;
+    .form-group {
+      width: 33.3%;
+    }
+    .control-label {
+      padding-right: 0;
+    }
+  }
+  
+  .upload-wrap {
+    height: 70px;
+    overflow: hidden;
+    margin: 10px 0;
+    padding: 0 20px;
+
+    .tit {
+      font-weight: bold;
+      margin-right: 20px;
+    }
+
+    p {
+      color: #666;
+      font-style: italic;
+      font-size: 10px;
+      margin: 15px 0 0 75px;
+    }
+
+    .file {
+      position: relative;
+      display: inline-block;
+      background: #D0EEFF;
+      border: 1px solid #99D3F5;
+      border-radius: 4px;
+      padding: 4px 12px;
+      overflow: hidden;
+      color: #1E88C7;
+      text-decoration: none;
+      text-indent: 0;
+      line-height: 20px;
+      vertical-align: middle;
+    }
+    .file input {
+      position: absolute;
+      font-size: 100px;
+      right: 0;
+      top: 0;
+      opacity: 0;
+    }
+    .file:hover {
+      background: #AADFFD;
+      border-color: #78C3F3;
+      color: #004974;
+      text-decoration: none;
+    }
+
+    .tip {
+      line-height: 30px;
+      margin-left: 15px;
+
+      &.error {
+        color: #c30;
+      }
+    }
+
+    .help-block {
+      display: inline-block;
+    }
+  }
+
+}

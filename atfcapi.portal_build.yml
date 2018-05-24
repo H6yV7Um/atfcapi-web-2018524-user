@@ -1,0 +1,22 @@
+language: fe
+version: 1
+before_script:
+ - echo 'before_script'
+install_script:
+ - whereis nodejs
+ - echo 'in stall_script'
+script:
+ - npm --registry=http://registry.npm.taobao.org install
+ - npm run prod
+after_success:
+ - echo 'build success'
+ - cp appspec.yml dist
+after_failure:
+ - echo 'after_failure'
+outfile:
+ - dist
+notifications:
+ email:
+ - qian.zhang02@ele.me
+branch:
+ master: alpha_stable

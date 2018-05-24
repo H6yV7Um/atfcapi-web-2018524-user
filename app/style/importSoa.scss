@@ -1,0 +1,42 @@
+#import-soa {
+  padding: 0 50px;
+  height: 100%;
+  overflow-y: auto;
+
+  .form-horizontal {
+    max-width: 1550px;
+  }
+
+  .select-list {
+    .form-group {
+      float: left;
+      width: 33%
+    }
+  }
+
+  .input-list {
+    .form-group {
+      float: none;
+      width: 70%;
+    }
+  }
+
+  textarea.form-control {
+    height: 100px;
+  }
+
+  .import-soa-btn {
+    margin-left: 20%;
+    width: 50%;
+    .form-group {
+      display: inline-block;
+      float:left;
+      width: 30%;
+    }
+  }
+  
+  .well.well-sm {
+    margin-top: 5%;
+  }
+
+}

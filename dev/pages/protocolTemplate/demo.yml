@@ -1,0 +1,2549 @@
+swagger: '2.0'
+info:
+  title: UTP Web Api
+  version: 1.0.0
+host: javis.alpha.elenet.me
+basePath: /api/utp2
+produces:
+  - application/json
+paths:
+  ## Tags: department
+  /list_all_bu:
+    get:
+      summary: 查询公司所有部门
+      description: 查询公司所有部门（返回的部门信息里不包括部门所在城市）
+      tags:
+        - department
+      responses:
+        '200':
+          description: 组织结构信息
+          schema:
+            $ref: '#/definitions/department'
+          examples:
+            application/json:
+              {"592": {"status": 1, "name": "\u767d\u9886\u5408\u80a5\u706b\u8f66\u6218\u8425", "created_at": 1431422763000, "manager_name": "\u6797\u51e1\u65ed", "updated_at": 1432621125000, "parent_id": 591, "bu_type_id": 8300, "manager_id": 377, "subordinate": [], "id": 592}, "594": {"status": 1, "name": "\u767d\u9886\u5408\u80a5\u56fd\u8d2d\u6218\u8425", "created_at": 1431422764000, "manager_name": "\u5218\u4e39", "updated_at": 1432621148000, "parent_id": 591, "bu_type_id": 8300, "manager_id": 1900, "subordinate": [], "id": 594}}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region_group/get_all_employer_by_bu:
+    get:
+      summary: 查询或筛选公司指定部门下的员工
+      description: 查询或筛选公司指定部门下的员工
+      tags:
+        - department
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: bu_id
+          in: query
+          description: 部门ID
+          required: true
+          type: integer
+        - name: keyword
+          in: query
+          description: 关键词（用户名）
+          required: false
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/department_staff_brief'
+          examples:
+            application/json:
+              [{"user_name": "\u6c6a\u51ef", "user_id": 18785}, {"user_name": "\u59da\u5f3a", "user_id": 2114}, {"user_name": "\u9648\u4f73\u7537", "user_id": 2627}, {"user_name": "\u6bb7\u5353\u541b", "user_id": 453}, {"user_name": "\u5e9e\u5609\u745c", "user_id": 7308}, {"user_name": "\u738b\u78ca", "user_id": 9328}, {"user_name": "\u7941\u78ca", "user_id": 3896}, {"user_name": "\u77bf\u8bda\u51ef", "user_id": 18755}, {"user_name": "\u80e1\u82b3\u82b3", "user_id": 2103}, {"user_name": "\u4f55\u7acb\u51e1", "user_id": 2104}, {"user_name": "\u674e\u91d1\u4f1f", "user_id": 4379}, {"user_name": "\u90d1\u6797\u81e3", "user_id": 4029}, {"user_name": "\u674e\u9526\u6bc5", "user_id": 16831}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region_group/search_business_line_structure:
+    get:
+      summary: 查询或筛选指定业务线下当前用户可管理的部门
+      description: 查询或筛选指定业务线下当前用户可管理的部门
+      tags:
+        - department
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: keyword
+          in: query
+          description: 关键词（部门名称）
+          required: false
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/department'
+          examples:
+            application/json:
+              [{"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u5f90\u6c47\u6218\u84251", "created_at": 1431422740000, "manager_name": "\u9648\u4f73\u7537", "updated_at": 1432611530000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 2627, "subordinate": [], "id": 556}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u9ec4\u6d66\u6218\u8425", "created_at": 1431422740000, "manager_name": "\u738b\u8d85", "updated_at": 1432611505000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 2628, "subordinate": [], "id": 554}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "created_at": 1431422740000, "manager_name": "\u5f90\u9f0e\u9e64", "updated_at": 1432611518000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 4324, "subordinate": [], "id": 555}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u5f90\u6c47\u6218\u84252", "created_at": 1435744782000, "manager_name": "\u5f20\u6653\u654f", "updated_at": 1442901357000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 1731, "subordinate": [], "id": 1548}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u6218\u56e22", "created_at": 1431422740000, "manager_name": "\u738b\u4fca\u6587", "updated_at": 1432611216000, "parent_id": 712, "bu_type_id": 8200, "manager_id": 347, "subordinate": [554, 555, 556, 1194, 1548], "id": 559}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u95f5\u884c\u6218\u8425", "created_at": 1431422949000, "manager_name": "\u674e\u91d1\u4f1f", "updated_at": 1438226681000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 4379, "subordinate": [], "id": 1194}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/get_city_by_bu:
+    get:
+      summary: 查询指定业务线下指定部门所在的城市1
+      description: 查询指定业务线下指定部门所在的城市
+      tags:
+        - department
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: bu_id
+          in: query
+          description: 部门ID
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 城市信息
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/department_city'
+          examples:
+            application/json:
+              [{"city_id": 1, "city_name": "\u4e0a\u6d77"}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/{business_line_id}/department/{department_id}/cities:
+    get:
+      summary: 查询指定业务线下指定部门所在的城市2
+      description: 查询指定业务线下指定部门所在的城市（department_id为-1时查询指定业务线下当前用户可管理的所有部门的所属城市）
+      tags:
+        - department
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: department_id
+          in: path
+          description: 部门id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 城市信息
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/department_city'
+          examples:
+            application/json:
+              [{"id": 1, "name": "\u4e0a\u6d77"}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/departments:
+    put:
+      summary: 修改指定业务线下的部门
+      description: 修改指定业务线下的部门（eg：移除部门、添加部门）
+      tags:
+        - department
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: params
+          in: body
+          description: 参数
+          required: true
+          schema:
+            type: object
+            required:
+              - bu_ids
+            properties:
+              bu_ids:
+                description: 部门IDs
+                type: array
+                items:
+                  type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - add
+              - del
+            properties:
+              add:
+                description: 添加了多少个部门
+                type: integer
+              del:
+                description: 删除了多少个部门
+                type: integer
+          examples:
+            application/json:
+              {"add": [5, 712, 1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1997, 1998, 721, 2140, 1246, 2144, 2150, 105], "del": []}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+    get:
+      summary: 搜索指定业务线下的部门
+      description: 搜索指定业务线下的部门
+      tags:
+        - department
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: keyword
+          in: query
+          description: 关键词（部门名称）
+          required:  false
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/department'
+          examples:
+            application/json:
+              [{"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u5f90\u6c47\u6218\u84251", "created_at": 1431422740000, "manager_name": "\u9648\u4f73\u7537", "updated_at": 1432611530000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 2627, "subordinate": [], "id": 556}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u9ec4\u6d66\u6218\u8425", "created_at": 1431422740000, "manager_name": "\u738b\u8d85", "updated_at": 1432611505000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 2628, "subordinate": [], "id": 554}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "created_at": 1431422740000, "manager_name": "\u5f90\u9f0e\u9e64", "updated_at": 1432611518000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 4324, "subordinate": [], "id": 555}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u5f90\u6c47\u6218\u84252", "created_at": 1435744782000, "manager_name": "\u5f20\u6653\u654f", "updated_at": 1442901357000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 1731, "subordinate": [], "id": 1548}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u6218\u56e22", "created_at": 1431422740000, "manager_name": "\u738b\u4fca\u6587", "updated_at": 1432611216000, "parent_id": 712, "bu_type_id": 8200, "manager_id": 347, "subordinate": [554, 555, 556, 1194, 1548], "id": 559}, {"status": 1, "name": "\u767d\u9886\u4e0a\u6d77\u95f5\u884c\u6218\u8425", "created_at": 1431422949000, "manager_name": "\u674e\u91d1\u4f1f", "updated_at": 1438226681000, "parent_id": 559, "bu_type_id": 8300, "manager_id": 4379, "subordinate": [], "id": 1194}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /departments:
+    get:
+      summary: 搜索公司下的部门
+      description: 搜索公司下的部门
+      tags:
+        - department
+      parameters:
+        - name: keyword
+          in: query
+          description: 关键词（部门名称）
+          required: false
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/department_brief1'
+          examples:
+            application/json:
+              [{"id": 598, "full_name": "\u997f\u4e86\u4e48->\u767d\u9886\u4e8b\u4e1a\u90e8->\u767d\u9886\u534e\u5357\u6218\u533a->\u767d\u9886\u5e7f\u5dde\u6218\u56e21->\u767d\u9886\u5e7f\u5dde\u5929\u6cb3\u6218\u84251", "name": "\u767d\u9886\u5e7f\u5dde\u5929\u6cb3\u6218\u84251"}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /department/{department_id}:
+    get:
+      summary: 查询指定部门
+      description: 查询指定部门（返回的部门信息里包括部门所在城市）
+      tags:
+        - department
+      parameters:
+        - name: department_id
+          in: path
+          description: 部门ID
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 部门信息
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/department_brief2'
+          examples:
+            application/json:
+              {"bu_id": 555, "cities": [{"id": 1, "name": "\u4e0a\u6d77"}], "bu_name": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "manager_id": 4324, "manager_name": "\u5f90\u9f0e\u9e64"}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /department/{department_id}/employees:
+    get:
+      summary: 查询公司指定部门下的员工
+      description: 查询公司指定部门下的员工
+      tags:
+        - department
+      parameters:
+        - name: department_id
+          in: path
+          description: 部门ID
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 部门员工信息
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/department_staff'
+          examples:
+            application/json:
+              [{"name": "\u5f90\u9f0e\u9e64", "roles": "\u6218\u8425\u8d1f\u8d23\u4eba,\u89c1\u4e60\u6218\u8425\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 1, "id": 4324, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425,\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "dinghe.xu@ele.me"}, {"name": "\u5b63\u8d5b\u4eae", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 6048, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "sailiang.ji@ele.me"}, {"name": "\u8d75\u632f\u534e", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 2753, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "zhenhua.zhao@ele.me"}, {"name": "\u738b\u5b81", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 10641, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "ningsh.wang@ele.me"}, {"name": "\u674e\u65ed\u5cf0", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 22730, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "xufeng.li@ele.me"}, {"name": "\u5f20\u5143\u5409", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 2129, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "yuanji.zhang@ele.me"}, {"name": "\u9f50\u677e\u677e", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 20530, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "songsong.qi@ele.me"}, {"name": "\u8d75\u5a05\u6797", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 1492, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "yalin.zhao@ele.me"}, {"name": "\u674e\u65fb", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 1590, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "min.li1@ele.me"}, {"name": "\u8def\u4e3d\u4e3d", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 1721, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "lili.lu@ele.me"}, {"name": "\u5f20\u5fd7\u4f1f", "roles": "\u8702\u7a9d\u8d1f\u8d23\u4eba", "mobile": 0, "is_manager": 0, "id": 16091, "departments": "\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "email": "zhiwei.zhang@ele.me"}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/department/{bu_id}/city:
+    put:
+      summary: 修改部门所属城市
+      description: 修改部门所属城市
+      tags:
+        - department
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: bu_id
+          in: path
+          description: 部门ID
+          required: true
+          type: integer
+        - name: params
+          in: body
+          description: 参数
+          required: true
+          schema:
+            type: object
+            properties:
+              cities:
+                description: 城市IDs
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: 上海
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: integer
+            description: 操作结果（1 成功 0 失败）
+            example: 1
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+
+  ## Tags: business line
+  /business_line/new:
+    post:
+      summary: 新建业务线
+      description: 新建业务线
+      tags:
+        - business line
+      parameters:
+        - name: params
+          in: body
+          description: 参数
+          required: true
+          schema:
+            type: object
+            required:
+              - name
+              - introduction
+              - code
+              - bu_ids
+              - items
+            properties:
+              name:
+                description: 业务线名称
+                type: string
+              introduction:
+                description: 业务线简介
+                type: string
+              code:
+                description: 业务线CODE
+                type: string
+              bu_ids:
+                description: 业务线包含的部门
+                type: array
+                items:
+                  type: integer
+              items:
+                description: 业务线支持的业务项
+                type: object
+                properties:
+                  region:
+                    type: boolean
+                  store:
+                    type: boolean
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: integer
+            example: 89
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/{business_line_id}:
+    get:
+      summary: 查询指定业务线
+      description: 查询指定业务线
+      tags:
+        - business line
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/extended_business_line2'
+          examples:
+            application/json:
+              {"introduction": "ironman", "code": "IRONMAN", "bi_type": 3, "name": "ironman", "id": 89}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+    put:
+      summary: 更新指定业务线
+      description: 更新指定业务线
+      tags:
+        - business line
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+        - name: name
+          in: query
+          description: 业务线名称
+          required: true
+          type: string
+        - name: introduction
+          in: query
+          description: 业务线简介
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/extended_business_line2'
+          examples:
+            application/json:
+              {"introduction": "superman", "code": "IRONMAN", "bi_type": 3, "name": "superman", "id": 89}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/list:
+    get:
+      summary: 查询当前用户可见的业务线
+      description: 查询当前用户可见的业务线
+      tags:
+        - business line
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/extended_business_line1'
+          examples:
+            application/json:
+              [{"introduction": "pltest", "item": {"region": true, "store": true}, "code": "B", "id": 100, "name": "\u5916\u5356\u4e1a\u52a1\u7ebf"},{"introduction": "ironman", "item": {"region": true, "store": true}, "code": "IRONMAN", "id": 89, "name": "ironman"}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+
+  ## Tags: region group
+  /{business_line_id}/region_group/new:
+    post:
+      summary: 新建区域组
+      description: 新建区域组
+      tags:
+        - region group
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: city_id
+          in: query
+          description: 区域组所属城市的ID
+          required: true
+          type: integer
+        - name: city_name
+          in: query
+          description: 区域组所属城市的名称
+          required: true
+          type: string
+        - name: manager_id
+          in: query
+          description: 区域组负责人的ID
+          required: true
+          type: integer
+        - name: manager_name
+          in: query
+          description: 区域组负责人的名称
+          required: true
+          type: string
+        - name: bu_id
+          in: query
+          description: 区域组所属部门的ID
+          required: true
+          type: integer
+        - name: name
+          in: query
+          description: 区域组名称
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: integer
+            description: 返回创建成功的区域组的ID
+            example: 10064
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region_group/{region_group_id}/delete:
+    delete:
+      summary: 删除指定区域组
+      description: 删除指定区域组
+      tags:
+        - region group
+      parameters:
+        - name: business_line_id
+          description: 业务线ID
+          in: path
+          required: true
+          type: integer
+        - name: region_group_id
+          description: 区域组ID
+          in: path
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            description: 删除结果（1 成功 0 失败）
+            type: integer
+            example: 1
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region_group/{region_group_id}/modify:
+    put:
+      summary: 修改指定区域组
+      description: 修改指定区域组
+      tags:
+        - region group
+      parameters:
+        - name: business_line_id
+          description: 业务线ID
+          in: path
+          required: true
+          type: integer
+        - name: region_group_id
+          description: 要修改的区域组的ID
+          in: path
+          required: true
+          type: integer
+        - name: manager_id
+          description: 区域组负责人的ID
+          in: query
+          required: true
+          type: integer
+        - name: manager_name
+          description: 区域组负责人的名称
+          in: query
+          required: true
+          type: string
+        - name: bu_id
+          description: 区域组所属部门的ID
+          in: query
+          required: true
+          type: integer
+        - name: name
+          description: 区域组名称
+          in: query
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: integer
+            description: 操作成功或失败（1 成功 0 失败）
+            example: 1
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region_group/search:
+    get:
+      summary: 筛选区域组1
+      description: 筛选区域组1
+      tags:
+        - region group
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: bu_id
+          description: 部门ID（department_id）
+          in: query
+          required: true
+          type: integer
+        - name: keyword
+          description: 关键词（区域组名称、城市名称、负责人名称）
+          in: query
+          required: false
+          type: string
+        - name: page_no
+          description: 页码
+          in: query
+          required: true
+          type: integer
+        - name: page_size
+          description: 每页显示的条数
+          in: query
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - region_group_list
+              - region_group_count
+            properties:
+              region_group_count:
+                description: 区域组数量
+                type: integer
+              region_group_list:
+                description: 区域组列表
+                $ref: '#/definitions/region_group'
+          examples:
+            application/json:
+              {"region_group_list": [{"city": "\u4e0a\u6d77", "region_count": 0, "name": "t9m5_region_group", "city_id": 1, "bu_id": 556, "department": [{"id": 5, "name": "\u997f\u4e86\u4e48"}, {"id": 721, "name": "\u767d\u9886\u4e8b\u4e1a\u90e8"}, {"id": 712, "name": "\u767d\u9886\u534e\u4e1c\u6218\u533a"}, {"id": 559, "name": "\u767d\u9886\u4e0a\u6d77\u6218\u56e22"}, {"id": 556, "name": "\u767d\u9886\u4e0a\u6d77\u5f90\u6c47\u6218\u84251"}], "user_id": 3221, "user_name": "t9m5", "id": 10064, "bl_id": 75}], "region_group_count": 1}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/{business_line_id}/department/{department_id}/region_groups:
+    get:
+      summary: 筛选区域组2
+      description: 筛选区域组2
+      tags:
+        - region group
+      parameters:
+        - name: business_line_id
+          description: 业务线ID
+          in: path
+          required: true
+          type: integer
+        - name: department_id
+          description: 部门ID
+          in: path
+          required: true
+          type: integer
+        - name: is_direct
+          description: 直属或非直属
+          in: query
+          required: false
+          type: integer
+        - name: city_id
+          description: 城市ID
+          in: query
+          required: false
+          type: integer
+        - name: keyword
+          in: query
+          description: 关键词（区域组名称、城市名称、负责人名称）
+          required: false
+          type: string
+        - name: page_no
+          description: 页码
+          in: query
+          required: false
+          type: integer
+        - name: page_size
+          description: 每页显示的条数
+          in: query
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - count
+              - list
+            properties:
+              count:
+                description: 区域组总数量
+                type: integer
+              list:
+                description: 区域组列表
+                type: array
+                items:
+                  $ref: '#/definitions/region_group_simple'
+          examples:
+            application/json:
+              {"count": 1, "list": [{"id": 10064, "name": "t9m5_region_group"}]}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+
+  ## Tags: region
+  /{business_line_id}/region/new:
+    post:
+      summary: 新建区域
+      description: 新建区域
+      tags:
+        - region
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: rg_id
+          in: query
+          description: 区域所属区域组的ID
+          required: true
+          type: integer
+        - name: name
+          in: query
+          description: 区域名称
+          required: true
+          type: string
+        - name: scale
+          in: query
+          description: 区域范围
+          required: true
+          type: string
+        - name: type
+          in: query
+          description: 区域类型
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: integer
+            description: 区域组ID
+            example: 7121
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region/delete:
+    delete:
+      summary: 删除指定区域
+      description: 删除指定区域（支持批量）
+      tags:
+        - region
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: region_ids
+          in: query
+          description: 区域IDs
+          required: true
+          type: array
+          collectionFormat: multi
+          items:
+            type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - TO_DELETE_REGION_ID
+            properties:
+              TO_DELETE_REGION_ID:
+                type: boolean
+                description: 要删除的区域的ID
+          examples:
+            application/json:
+              {"7124": true, "7125": true}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region/modify:
+    put:
+      summary: 修改指定区域
+      description: 修改指定区域
+      tags:
+        - region
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: region_id
+          in: query
+          description: 要修改的区域的ID
+          required: true
+          type: integer
+        - name: type
+          in: query
+          description: 区域类型
+          required: true
+          type: integer
+        - name: name
+          in: query
+          description: 区域名称
+          required: true
+          type: string
+        - name: scale
+          in: query
+          description: 区域范围
+          required: true
+          type: string
+        - name: rg_id
+          in: query
+          description: 区域所属区域组的ID
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: integer
+            description: 操作成功或失败（1 成功 0 失败）
+            example: 1
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region/move:
+    put:
+      summary: 修改指定区域所属的区域组
+      description: 修改指定区域所属的区域组（支持批量）。<br />注意：1.只能在同一条业务线内移动。2.批量修改目前是如果出现错误则全部回滚，不会部分成功部分失败。
+      tags:
+        - region
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: rg_id
+          in: query
+          description: 区域组ID
+          required: true
+          type: integer
+        - name: region_ids
+          in: query
+          description: 区域IDs
+          required: true
+          type: array
+          collectionFormat: multi
+          items:
+            type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - TO_MOVE_REGION_ID
+            properties:
+              TO_MOVE_REGION_ID:
+                type: boolean
+                description: 要移动的区域的ID
+          examples:
+            application/json:
+              {"7121": true}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/{business_line_id}/department/{department_id}/region_scales:
+    get:
+      summary: 查询区域1
+      description: 查询区域1（仅返回区域ID和区域范围信息）
+      tags:
+        - region
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: department_id
+          in: path
+          description: 部门ID
+          required: true
+          type: integer
+        - name: city_id
+          in: query
+          description: 城市ID
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/region_scale'
+          examples:
+            application/json:
+              [{"scale": "[[120.054034,31.192359],[120.09386,31.193534],[120.070514,31.167099]]", "id": 7121}, {"scale": "[[121.06615,31.434636],[120.681628,31.514281],[120.777759,31.204694]]", "id": 38}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region/{region_group_id}/get:
+    get:
+      summary: 查询区域2
+      description: 查询区域2（根据区域组查区域）
+      tags:
+        - region
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: region_group_id
+          in: path
+          description: 区域组ID
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/region'
+          examples:
+            application/json:
+              [{"scale": "[[120.054034,31.192359],[120.09386,31.193534],[120.070514,31.167099]]", "region_group_id": 10065, "type": {"id": 200, "name": "TEST"}, "id": 7121, "name": "t9m5_region"}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/{business_line_id}/department/{department_id}/regions:
+    get:
+      summary: 查询区域3
+      description: 查询区域3
+      tags:
+        - region
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: department_id
+          in: path
+          description: 部门ID
+          required: true
+          type: integer
+        - name: city_id
+          in: query
+          description: 城市ID
+          required: false
+          type: integer
+        - name: region_group_id
+          in: query
+          description: 区域组ID
+          required: false
+          type: integer
+        - name: keyword
+          in: query
+          description: 关键词（区域名称、区域ID）
+          required: false
+          type: string
+        - name: page_no
+          in: query
+          description: 页码
+          required: true
+          type: integer
+        - name: page_size
+          in: query
+          description: 每页显示的条数
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - region_count
+              - region_list
+            properties:
+              region_count:
+                description: region总数
+                type: integer
+              region_list:
+                description: region列表
+                type: array
+                items:
+                  $ref: '#/definitions/extended_region1'
+          examples:
+            application/json:
+              {"region_list": [{"scale": "[[120.054034,31.192359],[120.09386,31.193534],[120.070514,31.167099]]", "name": "t9m5_region", "region_group_name": "t9m5_region_group", "type": {"id": -1, "name": ""}, "id": 7121, "region_group_id": 10065}], "region_count": 1}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+
+  ## Tags: region type
+  /{business_line_id}/region_type:
+    post:
+      summary: 新建区域类型
+      description: 新建区域类型
+      tags:
+        - region type
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: name
+          in: query
+          description: 区域类型名称
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                description: 成功新建的区域类型ID
+                type: integer
+          examples:
+            application/json:
+              {"id": 201}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region_type/{type_id}:
+    put:
+      summary: 修改指定区域类型
+      description: 修改指定区域类型
+      tags:
+        - region type
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: type_id
+          in: path
+          description: 区域类型ID
+          required: true
+          type: integer
+        - name: name
+          in: query
+          description: 区域类型名称
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/extended_region_type1'
+          examples:
+            application/json:
+              {"id": 201, "name": "superman", "bl_id": 75}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+    get:
+      summary: 查询指定区域类型
+      description: 查询指定区域类型基本信息
+      tags:
+        - region type
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: type_id
+          in: path
+          description: 区域类型ID
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/extended_region_type1'
+          examples:
+            application/json:
+              {"id": 201, "name": "superman", "bl_id": 75}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region/label:
+    get:
+      summary: 查询指定业务线支持的区域类型1
+      description: 查询指定业务线支持的区域类型1
+      tags:
+        - region type
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/region_type'
+          examples:
+            application/json:
+              [{"id": 113, "name": "\u6821\u533a1"}, {"id": 114, "name": "\u6821\u533a"}]
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/region_types:
+    get:
+      summary: 查询指定业务线支持的区域类型2
+      description: 查询指定业务线支持的区域类型2
+      tags:
+        - region type
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+        - name: keyword
+          in: query
+          description: 关键词（标签名称）
+          required: false
+          type: string
+        - name: sort
+          in: query
+          description: 按ID排序（1 倒序 0 升序(default) ）
+          required: false
+          type: integer
+        - name: page_no
+          in: query
+          description: 页码
+          required: false
+          type: integer
+          format: int32
+        - name: page_size
+          in: query
+          description: 每页显示的条数
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - count
+              - list
+            properties:
+              count:
+                description: 区域类型总数
+                type: integer
+              list:
+                description: 区域类型列表
+                $ref: '#/definitions/extended_region_type2'
+          examples:
+            application/json:
+              {"count": 2, "list": [{"sum_num": 0, "id": 113, "name": "\u6821\u533a1", "bl_id": 75}, {"sum_num": 1, "id": 114, "name": "\u6821\u533a", "bl_id": 75}]}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+
+  ## Tags: store group
+  /business_line/{business_line_id}/store_group:
+    post:
+      summary: 新建门店组
+      description: 新建门店组
+      tags:
+        - store group
+      parameters:
+        - name: business_line_id
+          description: 业务线ID
+          in: path
+          required: true
+          type: integer
+        - name: city_id
+          description: 门店组所属城市的ID
+          in: formData
+          required: true
+          type: integer
+        - name: city_name
+          description: 门店组所属城市的名称
+          in: formData
+          required: true
+          type: string
+        - name: manager_id
+          description: 门店组负责人的ID
+          in: formData
+          required: true
+          type: integer
+        - name: manager_name
+          description: 门店组负责人的名称
+          in: formData
+          required: true
+          type: string
+        - name: bu_id
+          description: 门店组所属部门的ID
+          in: formData
+          required: true
+          type: integer
+        - name: name
+          description: 门店组名称
+          in: formData
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/store_group'
+          examples:
+            application/json:
+              {"name": "t9m5_store_group", "city_id": 1, "manager_name": "t9m5", "bu_id": 556, "manager_id": 3221, "city_name": "\u4e0a\u6d77", "id": 4868, "bl_id": 75}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/{business_line_id}/store_group/{store_group_id}:
+    delete:
+      summary: 删除指定门店组
+      description: 删除指定门店组
+      tags:
+        - store group
+      parameters:
+        - name: business_line_id
+          description: 业务线ID
+          in: path
+          required: true
+          type: integer
+        - name: store_group_id
+          description: 要删除的门店组的ID
+          in: path
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/store_group'
+          examples:
+            application/json:
+              {"name": "t9m5_store_grp", "city_id": 1, "manager_name": "t9m5", "bu_id": 556, "manager_id": 3221, "city_name": "\u4e0a\u6d77", "id": 4868, "bl_id": 75}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+    put:
+      summary: 修改指定门店组
+      description: 修改指定门店组
+      tags:
+        - store group
+      parameters:
+        - name: business_line_id
+          description: 业务线ID
+          in: path
+          required: true
+          type: integer
+        - name: store_group_id
+          description: 要修改的门店组的ID
+          in: path
+          required: true
+          type: integer
+        - name: city_id
+          description: 门店组所属城市的ID
+          in: formData
+          required: true
+          type: integer
+        - name: city_name
+          description: 门店组所属城市的名称
+          in: formData
+          required: true
+          type: string
+        - name: manager_id
+          description: 门店组负责人的ID
+          in: formData
+          required: true
+          type: integer
+        - name: manager_name
+          description: 门店组负责人的名称
+          in: formData
+          required: true
+          type: string
+        - name: bu_id
+          description: 门店组所属部门的ID
+          in: formData
+          required: true
+          type: integer
+        - name: name
+          description: 门店组名称
+          in: formData
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/store_group'
+          examples:
+            application/json:
+              {"name": "t9m5_store_grp", "city_id": 1, "manager_name": "t9m5", "bu_id": 556, "manager_id": 3221, "city_name": "\u4e0a\u6d77", "id": 4868, "bl_id": 75}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/{business_line_id}/store_groups:
+    get:
+      summary: 筛选门店组1
+      description: 筛选门店组1
+      tags:
+        - store group
+      parameters:
+        - name: business_line_id
+          description: 业务线ID
+          in: path
+          required: true
+          type: integer
+        - name: bu_id
+          description: 部门ID（department_id）
+          in: query
+          required: true
+          type: integer
+        - name: keyword
+          description: 关键词（门店组名称、城市名称、负责人名称）
+          in: query
+          required: false
+          type: string
+        - name: page_no
+          description: 页码
+          in: query
+          required: true
+          type: integer
+        - name: page_size
+          description: 每页显示的条数
+          in: query
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 查询执行成功
+          schema:
+            type: object
+            required:
+              - store_group_count
+              - store_group_list
+            properties:
+              store_group_count:
+                description: 门店组总数
+                type: integer
+              store_group_list:
+                description: 门店组列表
+                $ref: '#/definitions/extended_store_group1'
+          examples:
+            application/json:
+              {"store_group_list": [{"count": 0, "name": "t9m5_store_group", "city_id": 1, "manager_name": "t9m5", "bu_id": 556, "city_name": "\u4e0a\u6d77", "manager_id": 3221, "department": [{"id": 5, "name": "\u997f\u4e86\u4e48"}, {"id": 721, "name": "\u767d\u9886\u4e8b\u4e1a\u90e8"}, {"id": 712, "name": "\u767d\u9886\u534e\u4e1c\u6218\u533a"}, {"id": 559, "name": "\u767d\u9886\u4e0a\u6d77\u6218\u56e22"}, {"id": 556, "name": "\u767d\u9886\u4e0a\u6d77\u5f90\u6c47\u6218\u84251"}], "id": 4868, "bl_id": 75}], "store_group_count": 1}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/{business_line_id}/department/{department_id}/store_groups:
+    get:
+      summary: 筛选门店组2
+      description: 筛选门店组2
+      tags:
+        - store group
+      parameters:
+        - name: business_line_id
+          description: 业务线ID
+          in: path
+          required: true
+          type: integer
+        - name: department_id
+          description: 部门ID
+          in: path
+          required: true
+          type: integer
+        - name: is_direct
+          description: 直属或非直属（1 直属 0 非直属。不传或者传入非0，1的数字表示全部）
+          in: query
+          required: false
+          type: integer
+        - name: city_id
+          description: 城市ID（不传或者传0以及传负数时查询全部）
+          in: query
+          required: false
+          type: integer
+        - name: keyword
+          description: 关键词（门店组名称、城市名称、负责人名称）
+          in: query
+          required: false
+          type: string
+        - name: page_no
+          description: 页码
+          in: query
+          required: false
+          type: integer
+        - name: page_size
+          description: 每页显示的条数
+          in: query
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - count
+              - list
+            properties:
+              count:
+                description: 门店组总数量
+                type: integer
+              list:
+                description: 门店组列表
+                type: array
+                items:
+                  $ref: '#/definitions/store_group_simple'
+          examples:
+            application/json:
+              {"count": 1, "list": [{"id": 4868, "name": "t9m5_store_group"}]}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+
+  ## Tags: store
+  /business_line/{business_line_id}/store_group_map:
+    post:
+      summary: 将指定门店移入指定门店组
+      description: 将指定门店移入指定门店组（支持批量）
+      tags:
+        - store
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线ID
+          required: true
+          type: integer
+        - name: params
+          in: body
+          description: 参数
+          required: true
+          schema:
+            type: object
+            properties:
+              store_group_id:
+                type: integer
+              store_ids:
+                type: array
+                items:
+                  type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - success_ids
+              - fail_ids
+            properties:
+              success_ids:
+                description: 操作成功的门店ID
+                type: array
+                items:
+                  type: integer
+              fail_ids:
+                description: 操作失败的门店ID
+                type: array
+                items:
+                  type: integer
+          examples:
+            application/json:
+              {"success_ids": [2, 11811], "fail_ids": []}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+    delete:
+      summary: 将指定门店改为未分组
+      description: 将指定门店改为未分组（支持批量）
+      tags:
+        - store
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+        - name: map_ids
+          in: query
+          description: 门店和门店组的关系ID
+          required: true
+          type: array
+          collectionFormat: multi
+          items:
+            type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - result
+            properties:
+              result:
+                description: 操作成功的门店个数
+                type:  integer
+          examples:
+            application/json:
+              {"result": 1}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+    put:
+      summary: 修改指定门店所属门店组
+      description: 修改指定门店所属门店组（支持批量）
+      tags:
+        - store
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+        - name: params
+          in: body
+          description: 参数（注意map_id非store_id.囧）
+          required: true
+          schema:
+            type: object
+            properties:
+              store_group_id:
+                type: integer
+              map_ids:
+                type: array
+                items:
+                  type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - result
+            properties:
+              result:
+                description: 操作成功的门店个数
+                type:  integer
+          examples:
+            application/json:
+              {"result": 2}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /business_line/{business_line_id}/department/{department_id}/store_group_map:
+    get:
+      summary: 筛选门店1
+      description: 筛选门店1
+      tags:
+        - store
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+        - name: department_id
+          in: path
+          description: 部门id
+          required: true
+          type: integer
+        - name: city_id
+          in: query
+          description: 城市id
+          required: false
+          type: integer
+        - name: store_group_id
+          in: query
+          description: 门店组id
+          required: false
+          type: integer
+          format: integer
+        - name: keyword
+          in: query
+          description: 关键词（门店名称、门店ID）
+          required: false
+          type: string
+          format: string
+        - name: page_no
+          in: query
+          description: 页码
+          required: true
+          type: integer
+        - name: page_size
+          in: query
+          description: 每页显示的条数
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - store_count
+              - store_list
+            properties:
+              store_count:
+                description: 门店总数
+                type: integer
+              store_list:
+                description: 门店列表
+                type: array
+                items:
+                  $ref: '#/definitions/extended_store2'
+          examples:
+            application/json:
+              {"store_count": 2, "store_list": [{"map_id": 319301, "name": "\u767e\u80dc\u9910\u996e\u4f73\u6728\u65af\u5b9e\u4f53\u5e97\u4e1c\u4e34\u8def\u5e97", "mobile": "13918304937", "longitude": 130.318879, "address": "\u4e0a\u6d77\u8fd1\u94c1\u57ce\u5e02\u5e7f\u573a", "latitude": 46.799778, "store_id": 2}, {"map_id": 319302, "name": "rest resturant name", "mobile": "18938881595", "longitude": 121.382613, "address": "\u8fd1\u94c1\u57ce\u5e02\u5e7f\u573a", "latitude": 31.233021, "store_id": 11811}]}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /stores:
+    get:
+      summary: 筛选门店2
+      description: 筛选门店2
+      tags:
+        - store
+      parameters:
+        - name: is_group
+          in: query
+          description: 是否分组（0 未分组 1 已分组）
+          required: true
+          type: integer
+        - name: polygon
+          in: query
+          description: 多边形
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            required:
+              - count
+              - list
+            properties:
+              count:
+                description: 门店总数
+                type: integer
+              list:
+                description: 门店列表
+                type: array
+                items:
+                  $ref: '#/definitions/extended_store1'
+          examples:
+            application/json:
+              {"count": 1, "list": [{"name": "\u5fc5\u80dc\u5b85\u6025\u9001\uff08\u540c\u4e30\u5e97\uff09", "mobile": "", "is_group": 1, "longitude": 121.46148905, "address": "\u4e0a\u6d77\u5e02\u8679\u53e3\u533a\u540c\u4e30\u8def667\u5f04\u5730\u4e0b\u4e00\u5c42G48-FB1-1-170\u5ba4", "latitude": 31.27964146, "store_id": 60792}]}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  ## Tags: whitelist
+  /{business_line_id}/department_whitelist:
+    post:
+      summary: 新建白名单
+      description: 新建白名单
+      tags:
+        - department whitelist
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+        - name: main_department_id
+          in: formData
+          description: 主要部门id
+          required: true
+          type: integer
+        - name: main_department_name
+          in: formData
+          description: 主要部门名称
+          required: true
+          type: string
+        - name: relevant_department_id
+          in: formData
+          description: 关联部门id
+          required: true
+          type: integer
+        - name: relevant_department_name
+          in: formData
+          description: 关联部门名称
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/department_whitelist'
+          examples:
+            application/json:
+              {"relevant_department_name": "idontknow2", "main_department_name": "idontknow1", "main_department_id": 556, "white_list_id": 6, "relevant_full_name": "", "relevant_department_id": 555, "bl_id": 75}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/department_whitelist/{whitelist_id}:
+    put:
+      summary: 更新白名单
+      description: 更新白名单
+      tags:
+        - department whitelist
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+        - name: whitelist_id
+          in: path
+          description: 白名单id
+          required: true
+          type: integer
+        - name: main_department_id
+          in: formData
+          description: 主要部门id
+          required: true
+          type: integer
+        - name: main_department_name
+          in: formData
+          description: 主要部门名称
+          required: true
+          type: string
+        - name: relevant_department_id
+          in: formData
+          description: 关联部门id
+          required: true
+          type: integer
+        - name: relevant_department_name
+          in: formData
+          description: 关联部门名称
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            $ref: '#/definitions/department_whitelist'
+          examples:
+            application/text:
+              {"relevant_department_name": "idontknow1", "main_department_name": "idontknow2", "main_department_id": 555, "white_list_id": 7, "relevant_full_name": "", "relevant_department_id": 556, "bl_id": 75}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+    delete:
+      summary: 删除白名单
+      description: 删除白名单
+      tags:
+        - department whitelist
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+        - name: whitelist_id
+          in: path
+          description: 白名单id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: integer
+            enum:
+              - 1
+              - 0
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+  /{business_line_id}/department_whitelists:
+    get:
+      summary: 查询白名单
+      description: 查询白名单
+      tags:
+        - department whitelist
+      parameters:
+        - name: business_line_id
+          in: path
+          description: 业务线id
+          required: true
+          type: integer
+          format: int32
+        - name: keyword
+          in: query
+          description: 关键词（主部门名称、关联部门名称）
+          required: true
+          type: string
+        - name: page_no
+          in: query
+          description: 页码
+          required: true
+          type: integer
+        - name: page_size
+          in: query
+          description: 每页显示的条数
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 执行未出错
+          schema:
+            type: object
+            properties:
+              white_list_count:
+                type: integer
+              white_list_list:
+                $ref: '#/definitions/department_whitelist'
+          examples:
+            application/json:
+              {"white_list_count": 2, "white_list_list": [{"relevant_department_name": "idontknow2", "main_department_name": "idontknow1", "main_department_id": 556, "white_list_id": 7, "relevant_full_name": "", "relevant_department_id": 555555, "bl_id": 75}, {"relevant_department_name": "idontknow2", "main_department_name": "idontknow1", "main_department_id": 556, "white_list_id": 6, "relevant_full_name": "\u997f\u4e86\u4e48->\u767d\u9886\u4e8b\u4e1a\u90e8->\u767d\u9886\u534e\u4e1c\u6218\u533a->\u767d\u9886\u4e0a\u6d77\u6218\u56e22->\u767d\u9886\u4e0a\u6d77\u9759\u5b89\u6218\u8425", "relevant_department_id": 555, "bl_id": 75}]}
+        '403':
+          description: 无权限
+        '444':
+          description: 传参不合法
+        '500':
+          description: 系统异常
+
+definitions:
+  ########## business_line start ##########
+  business_line:
+    type: object
+    required:
+      - id
+      - name
+      - introduction
+      - code
+    properties:
+      id:
+        type: integer
+        description: 业务线ID
+      name:
+        type: string
+        description: 业务线名称
+      introduction:
+        type: string
+        description: 业务线简介
+      code:
+        type: string
+        description: 业务线code
+  extended_business_line1:
+    allOf:
+      - $ref: '#/definitions/business_line'
+      - type: object
+        required:
+          - item
+        properties:
+          item:
+            type: object
+            description: 业务线支持的业务项
+            required:
+              - store
+              - region
+            properties:
+              store:
+                type: boolean
+                description: 业务线是否支持区域
+              region:
+                type: boolean
+                description: 业务线是否支持门店
+  extended_business_line2:
+    allOf:
+      - $ref: '#/definitions/business_line'
+      - type: object
+        required:
+          - bi_type
+        properties:
+          bi_type:
+            type: integer
+            description: 业务线支持的业务项
+  ########## business_line end ##########
+
+  ########## department start ##########
+  department:
+    type: object
+    required:
+      - status
+      - name
+      - created_at
+      - manager_name
+      - updated_at
+      - parent_id
+      - bu_type_id
+      - manager_id
+      - subordinate
+      - id
+    properties:
+      id:
+        type: integer
+        description: 部门ID
+      name:
+        type: string
+        description: 部门名称
+      bu_type_id:
+        type: integer
+        description: 部门类型
+      parent_id:
+        type: integer
+        description: 直接上级部门ID
+      manager_id:
+        type: integer
+        description: 管理员id
+      manager_name:
+        type: string
+        description: 管理员姓名
+      created_at:
+        type: integer
+        description: 创建时间
+      updated_at:
+        type: integer
+        description: 更新时间
+      status:
+        type: integer
+        description: 状态
+      subordinate:
+        type: array
+        description: 子部门IDs
+        items:
+          type: integer
+
+  department_brief1:
+    type: object
+    required:
+      - id
+      - full_name
+      - name
+    properties:
+      id:
+        description: 部门ID
+        type: integer
+      name:
+        description: 部门名称
+        type: string
+      full_name:
+        description: 当前部门和其所有上级部门的名称
+        type: string
+
+  department_brief2:
+    type: object
+    required:
+      - bu_id
+      - cities
+      - bu_name
+      - manager_id
+      - manager_name
+    properties:
+      bu_id:
+        description: 部门ID
+        type: integer
+      bu_name:
+        description: 部门名称
+        type: string
+      cities:
+        description: 部门所在的城市
+        type: array
+        items:
+          $ref: '#/definitions/department_city'
+      manager_id:
+        description: 部门直接负责人的ID
+        type: integer
+      manager_name:
+        description: 部门直接负责人的名称
+        type: string
+
+  department_staff:
+    type: object
+    required:
+      - name
+      - roles
+      - mobile
+      - is_manager
+      - id
+      - departments
+      - email
+    properties:
+      id:
+        description: 员工ID
+        type: integer
+      name:
+        description: 员工名称
+        type: string
+      mobile:
+        description: 员工电话
+        type: string
+      email:
+        description: 员工邮箱
+        type: string
+      departments:
+        description: 员工所在部门
+        type: string
+      roles:
+        description: 员工角色
+        type: string
+      is_manager:
+        description: 是否为manager
+        type: integer
+
+  department_staff_brief:
+    type: object
+    required:
+      - user_name
+      - user_id
+    properties:
+      user_name:
+        description: 员工名称
+        type: string
+      user_id:
+        description: 员工ID
+        type: integer
+
+  department_city:
+    type: object
+    required:
+      - city_id
+      - city_name
+    properties:
+      city_id:
+        description: 城市ID
+        type: integer
+      city_name:
+        description: 城市名称
+        type: string
+  ########## department end ##########
+
+  ########## department_whitelist start ##########
+  department_whitelist:
+    type: object
+    required:
+      - relevant_department_name
+      - main_department_name
+      - main_department_id
+      - white_list_id
+      - relevant_department_id
+      - bl_id
+    properties:
+      white_list_id:
+        description: 白名单ID
+        type: integer
+      bl_id:
+        description: 业务线ID
+        type: integer
+      main_department_id:
+        description: 主要部门ID
+        type: integer
+      main_department_name:
+        description: 主要部门名称
+        type: string
+      relevant_department_id:
+        description: 关联部门ID
+        type: integer
+      relevant_department_name:
+        description: 关联部门名称
+        type: string
+      relevant_full_name:
+        description: 关联部门全称（包含其上级部门的名称）
+        type: string
+  ########## department_whitelist end ##########
+
+  ########## region start ##########
+  region:
+    type: object
+    required:
+      - id
+      - name
+      - scale
+      - region_group_id
+      - type
+    properties:
+      id:
+        description: 区域ID
+        type: integer
+      name:
+        description: 区域名称
+        type: string
+      scale:
+        description: 区域范围
+        type: string
+      region_group_id:
+        description: 区域所属区域组的ID
+        type: integer
+      type:
+        description: 区域类型
+        $ref: '#/definitions/region_type'
+  extended_region1:
+    allOf:
+      - $ref: '#/definitions/region'
+      - type: object
+        required:
+          - region_group_name
+        properties:
+          region_group_name:
+            description: 区域所属区域组的名称
+            type: string
+          type:
+            description: 区域类型
+            $ref: '#/definitions/region_type'
+
+  region_type:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        description: 区域类型ID
+        type: integer
+      name:
+        description: 区域类型名称
+        type: string
+  extended_region_type1:
+    allOf:
+      - $ref: '#/definitions/region_type'
+      - type: object
+        required:
+          - bl_id
+        properties:
+          bl_id:
+            description: 区域类型所属业务线的ID
+            type: integer
+  extended_region_type2:
+    allOf:
+      - $ref: '#/definitions/extended_region_type1'
+      - type: object
+        required:
+          - sum_num
+        properties:
+          sum_num:
+            description: 使用该区域类型的区域总数
+            type: integer
+
+  region_scale:
+    type: object
+    required:
+      - id
+      - scale
+    properties:
+      id:
+        description: 区域ID
+        type: integer
+      scale:
+        description: 区域范围
+        type: string
+  ########## region end ##########
+
+  ########## region_group start ##########
+  region_group:
+    type: object
+    required:
+      - city
+      - region_count
+      - name
+      - city_id
+      - bu_id
+      - department
+      - user_id
+      - user_name
+      - id
+      - bl_id
+    properties:
+      id:
+        description: 区域组ID
+        type: integer
+      name:
+        description: 区域组名称
+        type: string
+      bu_id:
+        description: 区域组直属部门的ID
+        type: integer
+      user_id:
+        description: 区域组直接负责人的ID
+        type: integer
+      user_name:
+        description: 区域组直接负责人的名称
+        type: string
+      city:
+        description: 区域组所属的城市的名称
+        type: string
+      city_id:
+        description: 区域组所属的城市的ID
+        type: integer
+      bl_id:
+        description: 区域组所属业务线的ID
+        type: integer
+      region_count:
+        description: 区域组包含的区域的数量
+        type: integer
+      department:
+        description: 区域组直属的部门和所有上级部门
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              description: 部门ID
+              type: integer
+            name:
+              description: 部门名称
+              type: string
+  region_group_simple:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        description: 区域组ID
+        type: integer
+      name:
+        description: 区域组名称
+        type: string
+  ########## region_group end ##########
+
+  ########## store group start ##########
+  store_group:
+    type: object
+    required:
+      - name
+      - city_id
+      - manager_name
+      - bu_id
+      - manager_id
+      - city_name
+      - id
+      - bl_id
+    properties:
+      id:
+        description: 门店组ID
+        type: integer
+      name:
+        description: 门店组名称
+        type: string
+      city_id:
+        description: 门店组所属城市的ID
+        type: integer
+      city_name:
+        description: 门店组所属城市的名称
+        type: string
+      manager_id:
+        description: 门店组负责人的ID
+        type: integer
+      manager_name:
+        description: 门店组负责人的名称
+        type: string
+      bu_id:
+        description: 门店组所属部门的ID
+        type: integer
+      bl_id:
+        description: 门店组所属业务线的ID
+        type: integer
+  extended_store_group1:
+    allOf:
+      - $ref: '#/definitions/store_group'
+      - type: object
+        required:
+          - count
+          - department
+        properties:
+          count:
+            description: 该门店组下的门店数量
+            type: integer
+          department:
+            description: 门店组的直属部门和所有上级部门
+            type: object
+            required:
+              - id
+              - name
+            properties:
+              id:
+                description: 部门ID
+                type: integer
+              name:
+                description: 部门名称
+                type: string
+
+  store_group_simple:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        description: 门店组ID
+        type: integer
+      name:
+        description: 门店组名称
+        type: string
+  ########## store group end ##########
+
+  ########## store start ##########
+  store:
+    type: object
+    required:
+      - name
+      - mobile
+      - longitude
+      - address
+      - latitude
+      - store_id
+    properties:
+      store_id:
+        description: 门店ID
+        type: integer
+      name:
+        description: 门店名称
+        type: string
+      mobile:
+        description: 门店电话
+        type: string
+      longitude:
+        description: 门店经纬度（经度）
+        type: string
+      latitude:
+        description: 门店经纬度（纬度）
+        type: string
+      address:
+        description: 门店地址
+        type: string
+  extended_store1:
+    allOf:
+      - $ref: '#/definitions/store'
+      - type: object
+        required:
+          - is_group
+        properties:
+          is_group:
+            description: 门店是否分组
+            type: integer
+  extended_store2:
+    allOf:
+      - $ref: '#/definitions/store'
+      - type: object
+        required:
+          - map_id
+        properties:
+          map_id:
+            description: 门店和门店组的关系ID
+            type: integer
+  ########## store end ##########
